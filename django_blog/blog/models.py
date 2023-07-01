@@ -1,5 +1,6 @@
 from django.db import models
 from user.models import User
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
 
@@ -30,6 +31,9 @@ class Post(models.Model):
         """Set the value of the slugfield to be the same value as the title"""
         self.slug = slugify(self.title)
         return super(Post, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('blog:post', args=[self.author.username, self.slug])
 
     def __str__(self) -> str:
         return self.title

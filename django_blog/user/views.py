@@ -7,6 +7,7 @@ from django.views.generic.base import TemplateView
 from django.urls import reverse_lazy
 from .models import User
 from .forms import RegisterForm, LoginForm
+from blog.models import Post
 
 
 class Index(TemplateView):
@@ -35,6 +36,11 @@ class Profile(DetailView):
     model = User
     template_name = 'user/profile.html'
     context_object_name = 'profile_user'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['posts'] = Post.objects.filter(author=self.request.user)
+        return context
 
 
 class Logout(LogoutView):

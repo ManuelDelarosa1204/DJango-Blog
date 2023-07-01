@@ -10,12 +10,12 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 {% if request.user.is_authenticated %}
                     <li class="nav-item">
-                        <a href="{% url 'user:profile' profile_user.slug %}" class="nav-link">
+                        <a href="{% url 'user:profile' user.slug %}" class="nav-link">
                             Profile
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{% url 'blog:create_post' user.slug %}" class="nav-link">
                             Create Post
                         </a>
                     </li>

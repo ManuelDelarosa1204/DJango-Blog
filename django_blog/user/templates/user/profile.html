@@ -8,5 +8,14 @@
     <h3>
         {{ profile_user.username }}
     </h3>
-    <p>page</p>
+    {% for post in posts %}
+        {{ post.title }}
+        <a href="{{ post.get_absolute_url }}">
+            {{ post.title }}
+        </a>
+    {% empty %}
+        <p>
+            There is nothing to show here yet
+        </p>
+    {% endfor %}
 {% endblock content %}
