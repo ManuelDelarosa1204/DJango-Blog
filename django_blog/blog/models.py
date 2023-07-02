@@ -39,7 +39,7 @@ class Post(models.Model):
         return self.title
 
     class Meta:
-        # Order be `posted date` descending
+        # Order by `posted date` descending
         ordering = ['-posted_date']
 
         # Create index for query optimization
