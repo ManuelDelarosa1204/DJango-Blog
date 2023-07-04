@@ -11,4 +11,27 @@
     <div class="mb-4">
         {{ post.body }}
     </div>
+    <div class="mb-5 mt-5">
+        {% for comment in comments %}
+            <div class="mb-4">
+                {{ comment.comment }}
+                <p>
+                    Posted by: {{ comment.author }}
+                </p>
+            </div>
+        {% empty %}
+            <p>
+                There are no comments for this post yet.
+            </p>
+        {% endfor %}
+    </div>
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">
+                Create Comment
+            </button>
+        </form>
+    </div>
 {% endblock content %}

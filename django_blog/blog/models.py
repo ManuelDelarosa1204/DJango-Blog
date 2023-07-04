@@ -46,3 +46,19 @@ class Post(models.Model):
         indexes = [
             models.Index(fields=['-posted_date'])
         ]
+
+
+class Comment(models.Model):
+    comment = models.TextField()
+    date_created = models.DateTimeField(default=timezone.now)
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='comments', blank=True, null=True)
+    post = models.ForeignKey(
+        Post, on_delete=models.CASCADE, related_name='comments', blank=True, null=True)
+
+    class Meta:
+        ordering = ['-date_created']
+
+        indexes = [
+            models.Index(fields=['-date_created'])
+        ]
