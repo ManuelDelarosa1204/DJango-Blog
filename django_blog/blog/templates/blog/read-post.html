@@ -16,7 +16,8 @@
             <div class="mb-4">
                 {{ comment.comment }}
                 <p>
-                    Posted by: {{ comment.author }}
+                    Posted by: {{ comment.author }} <br>
+                    Posted on: {{ comment.date_created | date:'d-m-Y, g:i A'}}
                 </p>
             </div>
         {% empty %}

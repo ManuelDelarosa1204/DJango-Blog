@@ -9,12 +9,13 @@ from user.models import User
 
 class CreatePost(CreateView):
     """View to create post"""
+
     model = Post
-    template_name = 'blog/create-post.html'
+    template_name = "blog/create-post.html"
     form_class = PostCreationForm
 
     def get_success_url(self) -> str:
-        return reverse_lazy('user:profile', args=[self.request.user.slug])
+        return reverse_lazy("user:profile", args=[self.request.user.slug])
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -23,8 +24,8 @@ class CreatePost(CreateView):
 
 class PostDetail(DetailView):
     model = Post
-    template_name = 'blog/read-post.html'
-    context_object_name = 'post'
+    template_name = "blog/read-post.html"
+    context_object_name = "post"
 
     def get_context_data(self, *args, **kwargs):
         """
@@ -34,24 +35,26 @@ class PostDetail(DetailView):
         """
 
         # Get the post object that is being viewed
-        post = Post.objects.get(slug=self.kwargs['slug'])
+        post = Post.objects.get(slug=self.kwargs["slug"])
 
         context = super().get_context_data(*args, **kwargs)
-        context['form'] = CommentCreationForm
-        context['comments'] = Comment.objects.filter(post=post)
+        context["form"] = CommentCreationForm
+        context["comments"] = Comment.objects.filter(post=post)
         return context
 
 
 class PostComment(CreateView):
     model = Comment
-    template_name = 'blog/read-post.html'
+    template_name = "blog/read-post.html"
     form_class = CommentCreationForm
 
     def get_success_url(self) -> str:
-        return reverse_lazy('blog:post', args=[self.request.user.username, self.kwargs['slug']])
+        return reverse_lazy(
+            "blog:post", args=[self.request.user.username, self.kwargs["slug"]]
+        )
 
     def form_valid(self, form):
-        post = Post.objects.get(slug=self.kwargs['slug'])
+        post = Post.objects.get(slug=self.kwargs["slug"])
         form.instance.author = self.request.user
         form.instance.post = post
         return super().form_valid(form)
