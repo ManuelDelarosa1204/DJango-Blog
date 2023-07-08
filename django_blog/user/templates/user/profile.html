@@ -9,10 +9,11 @@
         {{ profile_user.username }}
     </h3>
     {% for post in posts %}
-        {{ post.title }}
-        <a href="{{ post.get_absolute_url }}">
-            {{ post.title }}
-        </a>
+        <div class="card mb-4">
+            <a href="{{ post.get_absolute_url }}">
+                {{ post.title }}
+            </a> 
+        </div>
     {% empty %}
         <p>
             There is nothing to show here yet

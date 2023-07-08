@@ -1,10 +1,21 @@
-from django.views.generic.edit import CreateView, DeleteView, FormView
-from django.views.generic.detail import DetailView, SingleObjectMixin
+from django.views.generic.edit import CreateView, DeleteView
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from django.views import View
 from django.urls import reverse_lazy
 from .models import Post, Comment
 from .forms import PostCreationForm, CommentCreationForm
 from user.models import User
+
+
+class Index(ListView):
+    """View to display posts on the index page"""
+
+    model = Post
+    template_name = "blog/index.html"
+    context_object_name = "posts"
+
+    queryset = Post.objects.filter(status=Post.Status.PUBLIC)
 
 
 class CreatePost(CreateView):
@@ -23,9 +34,15 @@ class CreatePost(CreateView):
 
 
 class PostDetail(DetailView):
+    """
+    View to display posts
+
+    This is used as the `GET` view for ReadPost.
+    """
+
     model = Post
     template_name = "blog/read-post.html"
-    context_object_name = "post"
+    context_object_name = "posts"
 
     def get_context_data(self, *args, **kwargs):
         """
@@ -44,6 +61,12 @@ class PostDetail(DetailView):
 
 
 class PostComment(CreateView):
+    """
+    View used to create post comments.
+
+    This is used  `POST` view for ReadPost.
+    """
+
     model = Comment
     template_name = "blog/read-post.html"
     form_class = CommentCreationForm
